@@ -13,12 +13,10 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/dietapp", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => console.log("✅ MongoDB connected"))
-.catch(err => console.error("MongoDB error:", err));
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/dietapp")
+  .then(() => console.log("✅ MongoDB connected"))
+  .catch(err => console.error("❌ MongoDB error:", err));
+
 
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
