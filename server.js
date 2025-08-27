@@ -121,6 +121,7 @@ app.get("/api/user", verifyToken, async (req, res) => {
 });*/
 
 // Root route (for testing Render deployment)
+// Root route (for testing Render deployment)
 app.get("/", (req, res) => {
   res.send("🚀 Server is running on Render!");
 });
@@ -130,10 +131,10 @@ app.get("/health", (req, res) => {
   res.status(200).json({ status: "ok" });
 });
 
-// Protected route: get user details
-app.get("/api/user", verifyToken, async (req, res) => {
+// Unprotected route: get user details
+app.get("/api/user", async (req, res) => {
   try {
-    const user = await User.findById(req.user.userId).select("-password");
+    const user = await User.findOne().select("-password"); // fetches first user in DB
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -143,6 +144,7 @@ app.get("/api/user", verifyToken, async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+
 
 
 
