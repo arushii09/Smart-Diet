@@ -110,7 +110,7 @@ const verifyToken = (req, res, next) => {
     res.status(401).json({ message: "Token is not valid" });
   }
 };
-
+/*
 app.get("/api/user", verifyToken, async (req, res) => {
   try {
     const user = await User.findById(req.user.userId).select("-password");
@@ -118,7 +118,33 @@ app.get("/api/user", verifyToken, async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: "Server error" });
   }
+});*/
+
+// Root route (for testing Render deployment)
+app.get("/", (req, res) => {
+  res.send("🚀 Server is running on Render!");
 });
+
+// Health check route
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "ok" });
+});
+
+// Protected route: get user details
+app.get("/api/user", verifyToken, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.userId).select("-password");
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.json(user);
+  } catch (error) {
+    console.error("❌ Error fetching user:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+
 
 const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
