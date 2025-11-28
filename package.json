@@ -1,0 +1,28 @@
+{
+  "name": "smart-diet",
+  "version": "1.0.0",
+  "description": "SMART-DIET is a personalized nutrition and fitness web platform promoting healthier lifestyles using AI-assisted diet planning, real-time fitness tracking, and verified nutritionist consultations.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arushii09/Smart-Diet.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arushii09/Smart-Diet/issues"
+  },
+  "homepage": "https://github.com/arushii09/Smart-Diet#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "firebase": "^12.6.0",
+    "openai": "^6.9.1"
+  }
+}

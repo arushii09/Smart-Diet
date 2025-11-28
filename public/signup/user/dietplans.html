@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Diet Plans</title>
+  <link rel="stylesheet" href="dietplans.css" />
+  <link rel="shortcut icon" href="images/chatbot.png" type="image/png">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-content">
+    <h1><pre>S M A R T  D I E T</pre></h1>
+    <p class="subtitle">Smart Meal Plans</p>
+    <p class="description">Smart nutrition suggestions designed around your body and lifestyle.</p>
+  </div>
+  <nav>
+      <div class="button"><a href="start.html">Back</a></div>
+    </nav>
+</header>
+
+  <main class="container">
+     
+    <div class="card">
+      <h2>Your Profile</h2>
+      <p>Fill in your details to get personalized diet plans.</p>
+
+      <form id="user-form" class="row">
+        <label>Age <input type="number" name="age" required /></label>
+        <label>Gender
+          <select name="gender">
+            <option>Male</option><option>Female</option><option>Other</option>
+          </select>
+        </label>
+        <label>Height (cm) <input type="number" name="height" /></label>
+        <label>Weight (kg) <input type="number" name="weight" /></label>
+        <label>Allergies <input type="text" name="allergies" placeholder="e.g., peanuts" /></label>
+        <label>Fitness Goal
+          <select name="goal">
+            <option>Weight Loss</option><option>Weight Gain</option>
+            <option>Muscle Building</option><option>General Health</option>
+          </select>
+        </label>
+        <label style="flex:1 1 100%">Health Issue
+          <input type="text" name="healthIssue" placeholder="e.g., diabetes, thyroid, none"/>
+        </label>
+        <div style="flex:1 1 100%">
+          <button class="btn" type="submit">Save My Profile</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="card" id="chat-section" style="display:none">
+      <h2>Ask for a Meal Plan</h2>
+      <div class="row">
+        <label style="flex:1 1 300px">What do you want? (breakfast / lunch / dinner)
+          <input id="meal-request" placeholder="e.g., breakfast" />
+        </label>
+        <div style="display:flex; align-items:flex-end">
+          <button id="ask-btn" class="btn" type="button">Get Plan</button>
+        </div>
+      </div>
+      <div id="recommendations"></div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Smart Diet. All rights reserved.</p>
+  </footer>
+  <script src="diet.js"></script>
+</body>
+</html>
