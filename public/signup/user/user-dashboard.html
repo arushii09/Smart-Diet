@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SMART DIET - Premium Nutrition Platform</title>
     <link rel="stylesheet" href="user.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
-   
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap"
+        rel="stylesheet">
+
 </head>
+
 <body>
     <!-- Header -->
     <header>
-        
+
         <div class="container header-container">
             <div class="logo">
                 <!--<i class="fas fa-apple-alt"></i>-->
@@ -24,7 +28,13 @@
                     <li><a href="#features"><i class="fas fa-star"></i> Features</a></li>
                     <li><a href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
                     <li><a href="#scanner"><i class="fa-solid fa-camera"></i> AI Scanner</a></li>
-                    <li><a href="#community"><i class="fas fa-users"></i> Community</a></li>
+                    <li class="dropdown">
+                        <a href="#community"><i class="fas fa-users"></i> Community</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#home">Home</a></li>
+                            <li><a href="#badges">Badges</a></li>
+                        </ul>
+                    </li>
 
                 </ul>
             </nav>
@@ -38,135 +48,138 @@
     <!-- Hero Section -->
     <section class="hero">
         <section id="home">
-        <div class="container hero-content">
-            <div class="hero-text">
-                <h2>Personalized Diet Plans <span>Just For You</span></h2>
-                <p>Track calories, discover healthy recipes, and stay fit with our AI-powered nutrition platform designed for your unique health goals.</p>
-                <button onclick="getStarted()" class="btn btn-primary"><i class="fas fa-rocket"></i> Get Started Today</button>
-                
-                
-                <div class="hero-stats">
-                    <div class="stat">
-                        <div class="stat-value">10K+</div>
-                        <div class="stat-label">Active Users</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-value">500+</div>
-                        <div class="stat-label">Healthy Recipes</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-value">98%</div>
-                        <div class="stat-label">Success Rate</div>
+            <div class="container hero-content">
+                <div class="hero-text">
+                    <h2>Personalized Diet Plans <span>Just For You</span></h2>
+                    <p>Track calories, discover healthy recipes, and stay fit with our AI-powered nutrition platform
+                        designed for your unique health goals.</p>
+                    <button onclick="getStarted()" class="btn btn-primary"><i class="fas fa-rocket"></i> Get Started
+                        Today</button>
+
+
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <div class="stat-value">10K+</div>
+                            <div class="stat-label">Active Users</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">500+</div>
+                            <div class="stat-label">Healthy Recipes</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">98%</div>
+                            <div class="stat-label">Success Rate</div>
+                        </div>
                     </div>
                 </div>
+                <div class="hero-image">
+                    <img src="images/bg02.jpg" alt="Healthy Food">
+                </div>
             </div>
-            <div class="hero-image">
-                <img src="images/bg02.jpg" alt="Healthy Food">
-            </div>
-        </div>
         </section>
     </section>
 
     <!-- Features Section -->
     <section class="features">
         <section id="features">
-        <div class="container">
-            <div class="section-header">
-                <h2>Our Premium Features</h2>
-                <p>Discover how SMART DIET can transform your nutrition journey with cutting-edge features</p>
+            <div class="container">
+                <div class="section-header">
+                    <h2>Our Premium Features</h2>
+                    <p>Discover how SMART DIET can transform your nutrition journey with cutting-edge features</p>
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-user-cog"></i>
+                        </div>
+                        <h3>Personalized Diet</h3>
+                        <p>Custom meal plans tailored to your health goals, dietary preferences, and lifestyle.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <h3>Calorie Tracker</h3>
+                        <p>Easily monitor your daily calorie intake with our intuitive tracking system.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <h3>Healthy Recipes</h3>
+                        <p>Discover hundreds of delicious and nutritious recipes for every meal.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <h3>AI Suggestions</h3>
+                        <p>Get smart meal recommendations based on your preferences and goals.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                        <h3>Food Scanner</h3>
+                        <p>Scan food items to instantly get nutritional information and track your intake.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>Community Hub</h3>
+                        <p>Connect with other users, share progress, and get motivation from the community.</p>
+                    </div>
+                </div>
             </div>
-            
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-user-cog"></i>
-                    </div>
-                    <h3>Personalized Diet</h3>
-                    <p>Custom meal plans tailored to your health goals, dietary preferences, and lifestyle.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-calculator"></i>
-                    </div>
-                    <h3>Calorie Tracker</h3>
-                    <p>Easily monitor your daily calorie intake with our intuitive tracking system.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-utensils"></i>
-                    </div>
-                    <h3>Healthy Recipes</h3>
-                    <p>Discover hundreds of delicious and nutritious recipes for every meal.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-robot"></i>
-                    </div>
-                    <h3>AI Suggestions</h3>
-                    <p>Get smart meal recommendations based on your preferences and goals.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-camera"></i>
-                    </div>
-                    <h3>Food Scanner</h3>
-                    <p>Scan food items to instantly get nutritional information and track your intake.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <h3>Community Hub</h3>
-                    <p>Connect with other users, share progress, and get motivation from the community.</p>
-                </div>
-            </div>
-        </div>
         </section>
     </section>
 
     <!-- Scanner Demo Section -->
     <section class="scanner-demo">
         <section id="scanner">
-        <div class="container scanner-container">
-            <div class="scanner-content">
-                <h2>Smart Food Scanner</h2>
-                <p>Our advanced scanner technology makes tracking your nutrition effortless. Simply scan any food item to get instant nutritional information.</p>
-                
-                <div class="scanner-features">
-                    <div class="scanner-feature">
-                        <i class="fas fa-check-circle"></i>
-                        <span>Instant nutritional analysis</span>
+            <div class="container scanner-container">
+                <div class="scanner-content">
+                    <h2>Smart Food Scanner</h2>
+                    <p>Our advanced scanner technology makes tracking your nutrition effortless. Simply scan any food
+                        item to get instant nutritional information.</p>
+
+                    <div class="scanner-features">
+                        <div class="scanner-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Instant nutritional analysis</span>
+                        </div>
+                        <div class="scanner-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Barcode and image recognition</span>
+                        </div>
+                        <div class="scanner-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Allergen detection</span>
+                        </div>
+                        <div class="scanner-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Automatic calorie tracking</span>
+                        </div>
                     </div>
-                    <div class="scanner-feature">
-                        <i class="fas fa-check-circle"></i>
-                        <span>Barcode and image recognition</span>
-                    </div>
-                    <div class="scanner-feature">
-                        <i class="fas fa-check-circle"></i>
-                        <span>Allergen detection</span>
-                    </div>
-                    <div class="scanner-feature">
-                        <i class="fas fa-check-circle"></i>
-                        <span>Automatic calorie tracking</span>
+                    <button class="btn btn-primary"><i class="fas fa-camera"></i> Try Scanner Now</button>
+                </div>
+                <div class="scanner-visual">
+                    <div class="scanner-box">
+                        <div class="scanner-screen">
+                            <i class="fas fa-camera" style="font-size: 40px; color: var(--primary);"></i>
+                            <div class="scanner-line"></div>
+                            <p>Scanning Food...</p>
+                        </div>
                     </div>
                 </div>
-                <button class="btn btn-primary"><i class="fas fa-camera"></i> Try Scanner Now</button>
             </div>
-            <div class="scanner-visual">
-                <div class="scanner-box">
-                    <div class="scanner-screen">
-                        <i class="fas fa-camera" style="font-size: 40px; color: var(--primary);"></i>
-                        <div class="scanner-line"></div>
-                        <p>Scanning Food...</p>
-                    </div>
-                </div>
-            </div>
-        </div>
         </section>
     </section>
 
@@ -175,16 +188,18 @@
         <div class="container community-container">
             <div class="community-header">
                 <h2>Join Our Community Hub</h2>
-                <p>Connect with like-minded individuals, share your journey, and get inspired by success stories from our vibrant community.</p>
+                <p>Connect with like-minded individuals, share your journey, and get inspired by success stories from
+                    our vibrant community.</p>
             </div>
-            
+
             <div class="community-features">
                 <div class="community-card">
                     <div class="community-icon">
                         <i class="fas fa-user-friends"></i>
                     </div>
                     <h3>Connect & Share</h3>
-                    <p>Join groups based on your dietary preferences and fitness goals. Share your progress, challenges, and successes.</p>
+                    <p>Join groups based on your dietary preferences and fitness goals. Share your progress, challenges,
+                        and successes.</p>
                     <div class="community-stats">
                         <div class="community-stat">
                             <div class="community-stat-value">200+</div>
@@ -196,7 +211,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="community-card">
                     <div class="community-icon">
                         <i class="fas fa-trophy"></i>
@@ -214,13 +229,14 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="community-card">
                     <div class="community-icon">
                         <i class="fas fa-chart-line"></i>
                     </div>
                     <h3>Progress Tracking</h3>
-                    <p>Compare your progress with community benchmarks and get insights to improve your nutrition journey.</p>
+                    <p>Compare your progress with community benchmarks and get insights to improve your nutrition
+                        journey.</p>
                     <div class="community-stats">
                         <div class="community-stat">
                             <div class="community-stat-value">85%</div>
@@ -246,81 +262,83 @@
     </section>
 
     <!--chatbot-->
-     <div id="chatbot-button">
-    <img src="signup/user/images/chatbot.png" alt="chatbot">
-  </div>
+    <div id="chatbot-button">
+        <img src="signup/user/images/chatbot.png" alt="chatbot">
+    </div>
 
-  <div id="chatbot-container">
-    <div id="chatbot-header">
-      <h3>Diet Assistant</h3>
-      <button id="chatbot-close">×</button>
+    <div id="chatbot-container">
+        <div id="chatbot-header">
+            <h3>Diet Assistant</h3>
+            <button id="chatbot-close">×</button>
+        </div>
+        <div id="chatbot-messages">
+            <div class="message bot-message">Hello! I'm your diet assistant. How can I help you with your nutrition
+                questions today?</div>
+        </div>
+        <div id="chatbot-input">
+            <input type="text" id="chatbot-user-input" placeholder="Ask me about diet, nutrition...">
+            <button id="chatbot-send">Send</button>
+        </div>
     </div>
-    <div id="chatbot-messages">
-      <div class="message bot-message">Hello! I'm your diet assistant. How can I help you with your nutrition questions today?</div>
-    </div>
-    <div id="chatbot-input">
-      <input type="text" id="chatbot-user-input" placeholder="Ask me about diet, nutrition...">
-      <button id="chatbot-send">Send</button>
-    </div>
-  </div>
 
     <!-- Footer -->
     <footer>
         <section id="contact">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>SMART DIET</h3>
-                    <p>Your personalized nutrition platform for a healthier lifestyle.</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-column">
+                        <h3>SMART DIET</h3>
+                        <p>Your personalized nutrition platform for a healthier lifestyle.</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="footer-column">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">Features</a></li>
+                            <li><a href="#">Recipes</a></li>
+                            <li><a href="#">Community Hub</a></li>
+                            <li><a href="#">Testimonials</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-column">
+                        <h3>Resources</h3>
+                        <ul>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Nutrition Guide</a></li>
+                            <li><a href="#">Food Scanner</a></li>
+                            <li><a href="#">FAQ</a></li>
+                            <li><a href="#">Support</a></li>
+                            <li><a href="#">Community</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-column">
+                        <h3>Contact Us</h3>
+                        <ul>
+                            <li><i class="fas fa-envelope"></i> info@smartdiet.com</li>
+                            <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                            <li><i class="fas fa-map-marker-alt"></i> 123 Health St, Nutrition City</li>
+                        </ul>
                     </div>
                 </div>
-                
-                <div class="footer-column">
-                    <h3>Quick Links</h3>
-                    <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Features</a></li>
-                        <li><a href="#">Recipes</a></li>
-                        <li><a href="#">Community Hub</a></li>
-                        <li><a href="#">Testimonials</a></li>
-                        <li><a href="#">Contact</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>Resources</h3>
-                    <ul>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Nutrition Guide</a></li>
-                        <li><a href="#">Food Scanner</a></li>
-                        <li><a href="#">FAQ</a></li>
-                        <li><a href="#">Support</a></li>
-                        <li><a href="#">Community</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>Contact Us</h3>
-                    <ul>
-                        <li><i class="fas fa-envelope"></i> info@smartdiet.com</li>
-                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
-                        <li><i class="fas fa-map-marker-alt"></i> 123 Health St, Nutrition City</li>
-                    </ul>
+                <div class="copyright">
+                    <p>&copy; 2023 SMART DIET. All rights reserved.</p>
                 </div>
             </div>
-            <div class="copyright">
-                <p>&copy; 2023 SMART DIET. All rights reserved.</p>
-            </div>
-        </div>
         </section>
     </footer>
 
     <script src="script.js"></script>
-     <script src="bot.js"></script>
+    <script src="bot.js"></script>
 </body>
+
 </html>
