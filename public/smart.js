@@ -3,6 +3,10 @@
     window.location.href = "signup/login.html"; // Replace with your actual login page path
   }
 
+   function tryScanner() {
+    window.location.href = "signup/scan.html"; // Replace with your actual login page path
+  }
+
         // Simple animation on scroll
         document.addEventListener('DOMContentLoaded', function() {
             const featureCards = document.querySelectorAll('.feature-card, .community-card');

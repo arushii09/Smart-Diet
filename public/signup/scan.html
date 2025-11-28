@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Food Barcode Scanner — Multilingual + AI-ready</title>
+ <link rel="stylesheet" href="scan.css">
+<!-- html5-qrcode CDN -->
+<script src="https://unpkg.com/html5-qrcode@2.3.8/minified/html5-qrcode.min.js"></script>
+
+</head>
+<body>
+  <div class="app" id="app">
+    <!-- LEFT: Controls & Scanner -->
+    <div class="panel">
+      <div class="meta">
+        <div>
+          <h1 id="title">Food Barcode Scanner</h1>
+          <p class="lead" id="subtitle">Scan a barcode with your camera to fetch product info (OpenFoodFacts) — AI optional.</p>
+        </div>
+        <div style="text-align:right">
+          <select id="lang" class="lang-select" aria-label="Language">
+            <option value="en">English</option>
+            <option value="hi">हिन्दी</option>
+            <option value="es">Español</option>
+            <option value="fr">Français</option>
+            <option value="ar">العربية</option>
+          </select>
+        </div>
+      </div>
+
+      <label id="label-manual">Manual barcode / UPC</label>
+      <input id="manualInput" type="text" placeholder="Type or paste barcode (e.g. 7622210292742)">
+
+      <div class="controls">
+        <button class="btn" id="startBtn">Start camera</button>
+        <button class="btn ghost" id="stopBtn">Stop</button>
+        <button class="btn ghost" id="lookupBtn">Lookup</button>
+      </div>
+
+      <div style="margin-top:10px;">
+        <div id="reader">Camera will show here — allow camera permission</div>
+      </div>
+
+      <div style="margin-top:10px; display:flex; gap:8px; align-items:center;">
+        <label style="display:flex; align-items:center; gap:8px;">
+          <input type="checkbox" id="aiToggle"> <span class="muted">Enable AI lookup</span>
+        </label>
+        <div style="margin-left:auto" class="muted">API calls: OpenFoodFacts (open)</div>
+      </div>
+
+      <div id="aiPanel" class="ai-result" style="display:none;">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div><strong id="aiTitle">AI Results</strong><div class="muted" style="font-size:12px">Parsed ingredients, allergens & suggestions (requires server)</div></div>
+          <button id="aiRun" class="btn small">Run AI</button>
+        </div>
+        <pre id="aiOutput" style="margin-top:8px; white-space:pre-wrap;"></pre>
+      </div>
+    </div>
+
+    <!-- RIGHT: Product preview -->
+    <div class="panel">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div id="productTitle" style="font-weight:700; font-size:18px">No product scanned</div>
+          <div id="productBrand" class="muted" style="margin-top:4px">Scan a barcode to fetch product details</div>
+        </div>
+        <div>
+          <div id="statusBadge" class="badge">Idle</div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-image" id="productImage">
+          <span class="muted">No image</span>
+        </div>
+
+        <div class="product-info">
+          <div id="productDesc" class="muted" style="font-size:14px">Product details appear here.</div>
+
+          <div id="nutritionBox" class="nutrition" style="display:none">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <strong>Nutrition (per 100g)</strong>
+              <div class="muted" id="nutriScore">Nutri-Score: -</div>
+            </div>
+            <div id="nutritionList" style="margin-top:8px; font-size:14px"></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:12px;">
+        <strong>Last scanned barcode:</strong> <span id="lastCode" class="muted">—</span>
+      </div>
+
+      <div style="margin-top:14px;">
+        <button id="openProductBtn" class="btn ghost">Open on OpenFoodFacts</button>
+        <button id="clearBtn" class="btn ghost">Clear</button>
+      </div>
+    </div>
+  </div>
+<script src="scan.js"></script>
+</body>
+</html>
