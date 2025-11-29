@@ -1,356 +1,495 @@
-const T = {
-  en: {
-    title: "Food Barcode Scanner",
-    subtitle: "Scan a barcode with your camera to fetch product info (OpenFoodFacts) — AI optional.",
-    manual: "Manual barcode / UPC",
-    start: "Start camera",
-    stop: "Stop",
-    lookup: "Lookup",
-    enableAI: "Enable AI lookup",
-    aiRun: "Run AI",
-    statusIdle: "Idle",
-    statusScanning: "Scanning",
-    statusFound: "Found",
-    noImage: "No image",
-    openOnOFF: "Open on OpenFoodFacts",
-    clear: "Clear",
-    noProduct: "No product scanned",
-    fetching: "Fetching…",
-    productNotFound: "Product not found",
-  },
-  hi: {
-    title: "फूड बारकोड स्कैनर",
-    subtitle: "कैमरे से बारकोड स्कैन करें और उत्पाद जानकारी प्राप्त करें (OpenFoodFacts) — AI वैकल्पिक।",
-    manual: "मैनुअल बारकोड / UPC",
-    start: "कैमरा चालू करें",
-    stop: "रोकें",
-    lookup: "खोजें",
-    enableAI: "AI लुकअप सक्षम करें",
-    aiRun: "AI चलाएँ",
-    statusIdle: "निष्क्रिय",
-    statusScanning: "स्कैन हो रहा है",
-    statusFound: "मिला",
-    noImage: "कोई छवि नहीं",
-    openOnOFF: "OpenFoodFacts पर खोलें",
-    clear: "साफ़ करें",
-    noProduct: "कोई उत्पाद स्कैन नहीं हुआ",
-    fetching: "प्राप्त कर रहे हैं…",
-    productNotFound: "उत्पाद नहीं मिला",
-  },
-  es: {
-    title: "Escáner de Códigos",
-    subtitle: "Escanea un código con la cámara para obtener info del producto (OpenFoodFacts) — AI opcional.",
-    manual: "Código / UPC manual",
-    start: "Iniciar cámara",
-    stop: "Detener",
-    lookup: "Buscar",
-    enableAI: "Habilitar AI",
-    aiRun: "Ejecutar AI",
-    statusIdle: "Inactivo",
-    statusScanning: "Escaneando",
-    statusFound: "Encontrado",
-    noImage: "Sin imagen",
-    openOnOFF: "Abrir en OpenFoodFacts",
-    clear: "Limpiar",
-    noProduct: "Ningún producto escaneado",
-    fetching: "Buscando…",
-    productNotFound: "Producto no encontrado",
-  },
-  fr: {
-    title: "Scanner de Codes-barres",
-    subtitle: "Scannez un code avec la caméra pour récupérer les infos (OpenFoodFacts) — AI optionnel.",
-    manual: "Code / UPC manuel",
-    start: "Démarrer la caméra",
-    stop: "Arrêter",
-    lookup: "Rechercher",
-    enableAI: "Activer AI",
-    aiRun: "Exécuter AI",
-    statusIdle: "Inactif",
-    statusScanning: "Scanning",
-    statusFound: "Trouvé",
-    noImage: "Pas d'image",
-    openOnOFF: "Ouvrir sur OpenFoodFacts",
-    clear: "Effacer",
-    noProduct: "Aucun produit scanné",
-    fetching: "Récupération…",
-    productNotFound: "Produit introuvable",
-  },
-  ar: {
-    title: "ماسح باركود الطعام",
-    subtitle: "امسح الباركود بالكاميرا للحصول على معلومات المنتج (OpenFoodFacts) — AI اختياري.",
-    manual: "باركود يدوي / UPC",
-    start: "تشغيل الكاميرا",
-    stop: "إيقاف",
-    lookup: "بحث",
-    enableAI: "تمكين AI",
-    aiRun: "تشغيل AI",
-    statusIdle: "خامل",
-    statusScanning: "جارٍ المسح",
-    statusFound: "تم العثور",
-    noImage: "لا توجد صورة",
-    openOnOFF: "فتح على OpenFoodFacts",
-    clear: "مسح",
-    noProduct: "لم يتم مسح أي منتج",
-    fetching: "جاري التحميل…",
-    productNotFound: "لم يتم العثور على المنتج",
-  }
-};
-
-/* DOM helpers */
-const $ = id => document.getElementById(id);
-const langSelect = $('lang');
-
-/* app state */
-let scanner = null;
-let currentLang = 'en';
-let lastBarcode = '';
-let openFoodFactsUrl = '';
-
-/* UI elements */
-const startBtn = $('startBtn');
-const stopBtn = $('stopBtn');
-const lookupBtn = $('lookupBtn');
-const readerEl = $('reader');
-const manualInput = $('manualInput');
-const statusBadge = $('statusBadge');
-const productTitle = $('productTitle');
-const productBrand = $('productBrand');
-const productImage = $('productImage');
-const productDesc = $('productDesc');
-const nutritionBox = $('nutritionBox');
-const nutritionList = $('nutritionList');
-const lastCode = $('lastCode');
-const openProductBtn = $('openProductBtn');
-const clearBtn = $('clearBtn');
-const aiToggle = $('aiToggle');
-const aiPanel = $('aiPanel');
-const aiRun = $('aiRun');
-const aiOutput = $('aiOutput');
-const aiTitle = $('aiTitle');
-
-/* translations application */
-function applyLang(lang){
-  currentLang = lang;
-  const t = T[lang] || T.en;
-  $('title').textContent = t.title;
-  $('subtitle').textContent = t.subtitle;
-  $('label-manual').textContent = t.manual;
-  startBtn.textContent = t.start;
-  stopBtn.textContent = t.stop;
-  lookupBtn.textContent = t.lookup;
-  $('aiTitle').textContent = t.aiRun;
-  statusBadge.textContent = t.statusIdle;
-  openProductBtn.textContent = t.openOnOFF;
-  clearBtn.textContent = t.clear;
-  aiRun.textContent = t.aiRun;
-  aiPanel.style.display = aiToggle.checked ? 'block' : 'none';
-  // Arabic: set RTL
-  if(lang === 'ar') document.documentElement.setAttribute('dir','rtl');
-  else document.documentElement.removeAttribute('dir');
-}
-langSelect.addEventListener('change', ()=> applyLang(langSelect.value));
-applyLang(currentLang);
-
-/* start camera scanner */
-startBtn.addEventListener('click', async () => {
-  try {
-    // If already running, ignore
-    if(scanner) return;
-    statusBadge.textContent = T[currentLang].statusScanning;
-    readerEl.innerHTML = '';
-    // create scanner
-    scanner = new Html5Qrcode("reader", /* verbose= */ false);
-    const cameras = await Html5Qrcode.getCameras();
-    const cameraId = cameras && cameras.length ? cameras[0].id : undefined;
-    await scanner.start(
-      cameraId ? { deviceId: { exact: cameraId } } : { facingMode: "environment" },
-      {
-        fps: 10,
-        qrbox: { width: 300, height: 100 },
-        experimentalFeatures: { useBarCodeDetectorIfSupported: true }
-      },
-      decodedText => {
-        // On successful scan
-        if (!decodedText) return;
-        // Avoid duplicates
-        if(decodedText === lastBarcode) return;
-        lastBarcode = decodedText;
-        onBarcodeScanned(decodedText);
-      },
-      errorMessage => {
-        // ignore scanning errors
-      }
-    );
-  } catch(err){
-    console.error("camera error", err);
-    alert("Camera failed — check permissions or use manual lookup.");
-    statusBadge.textContent = T[currentLang].statusIdle;
-    if(scanner){ try{ await scanner.stop(); scanner = null; }catch(e){} }
-  }
-});
-
-/* stop scanner */
-stopBtn.addEventListener('click', async () => {
-  if(!scanner) return;
-  try{
-    await scanner.stop();
-    scanner.clear();
-  }catch(e){/*ignore*/}
-  scanner = null;
-  statusBadge.textContent = T[currentLang].statusIdle;
-});
-
-/* manual lookup */
-lookupBtn.addEventListener('click', () => {
-  const code = manualInput.value.trim();
-  if(!code) { alert("Enter a barcode"); return; }
-  onBarcodeScanned(code);
-});
-
-/* when scanned */
-async function onBarcodeScanned(code){
-  statusBadge.textContent = T[currentLang].statusFound;
-  lastCode.textContent = code;
-  $('lastCode').textContent = code;
-  productTitle.textContent = T[currentLang].fetching;
-  productBrand.textContent = "";
-  productImage.innerHTML = '<span class="muted">'+T[currentLang].noImage+'</span>';
-  productDesc.textContent = "";
-  nutritionBox.style.display = 'none';
-  openFoodFactsUrl = '';
-
-  // OpenFoodFacts lookup
-  try {
-    const resp = await fetch(`https://world.openfoodfacts.org/api/v0/product/${encodeURIComponent(code)}.json`);
-    const data = await resp.json();
-    if(data.status === 1 && data.product) {
-      const p = data.product;
-      displayProductFromOFF(p, code);
-    } else {
-      productTitle.textContent = T[currentLang].productNotFound;
-      productBrand.textContent = "";
+// Food Safety AI Analysis System
+class FoodSafetyAnalyzer {
+    constructor() {
+        this.initializeEventListeners();
+        this.initializeDragAndDrop();
     }
-  } catch(e){
-    console.error("lookup error", e);
-    productTitle.textContent = "Lookup error";
-    productDesc.textContent = String(e);
-  }
+
+    initializeEventListeners() {
+        // Lookup by barcode
+        document.getElementById('lookupBtn').addEventListener('click', () => {
+            this.handleBarcodeLookup();
+        });
+
+        // Analyze by manual input
+        document.getElementById('analyzeBtn').addEventListener('click', () => {
+            this.handleManualAnalysis();
+        });
+
+        // Enter key support for barcode input
+        document.getElementById('barcodeInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                this.handleBarcodeLookup();
+            }
+        });
+
+        // File input change
+        document.getElementById('fileInput').addEventListener('change', (e) => {
+            this.handleFileUpload(e.target.files[0]);
+        });
+    }
+
+    initializeDragAndDrop() {
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+
+        uploadArea.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                this.handleFileUpload(files[0]);
+            }
+        });
+    }
+
+    async handleBarcodeLookup() {
+        const barcode = document.getElementById('barcodeInput').value.trim();
+        
+        if (!barcode) {
+            this.showError('Please enter a barcode');
+            return;
+        }
+
+        if (!/^\d+$/.test(barcode)) {
+            this.showError('Please enter a valid numeric barcode');
+            return;
+        }
+
+        this.showLoading();
+        
+        try {
+            // Simulate API call to OpenFoodFacts
+            const productData = await this.fetchProductData(barcode);
+            await this.analyzeProductSafety(productData);
+        } catch (error) {
+            this.showError('Failed to fetch product data. Please try again.');
+        } finally {
+            this.hideLoading();
+        }
+    }
+
+    async handleManualAnalysis() {
+        const productName = document.getElementById('productName').value.trim();
+        const productBrand = document.getElementById('productBrand').value.trim();
+        const ingredients = document.getElementById('ingredients').value.trim();
+
+        if (!productName || !ingredients) {
+            this.showError('Please enter at least product name and ingredients');
+            return;
+        }
+
+        const productData = {
+            name: productName,
+            brand: productBrand,
+            ingredients: ingredients,
+            barcode: 'MANUAL_INPUT'
+        };
+
+        this.showLoading();
+        
+        try {
+            await this.analyzeProductSafety(productData);
+        } catch (error) {
+            this.showError('Analysis failed. Please try again.');
+        } finally {
+            this.hideLoading();
+        }
+    }
+
+    async handleFileUpload(file) {
+        if (!file) return;
+
+        // Validate file type
+        const validTypes = ['image/jpeg', 'image/png', 'image/webp'];
+        if (!validTypes.includes(file.type)) {
+            this.showError('Please upload a valid image file (JPG, PNG, WEBP)');
+            return;
+        }
+
+        // Validate file size (5MB max)
+        if (file.size > 5 * 1024 * 1024) {
+            this.showError('File size must be less than 5MB');
+            return;
+        }
+
+        this.showLoading();
+        
+        try {
+            // Simulate image processing and barcode detection
+            const barcode = await this.processImageForBarcode(file);
+            if (barcode) {
+                const productData = await this.fetchProductData(barcode);
+                await this.analyzeProductSafety(productData);
+            } else {
+                this.showError('Could not detect barcode in the image. Please try another image or enter details manually.');
+            }
+        } catch (error) {
+            this.showError('Failed to process image. Please try again.');
+        } finally {
+            this.hideLoading();
+        }
+    }
+
+    // Simulated API calls and processing
+    async fetchProductData(barcode) {
+        // Simulate API delay
+        await new Promise(resolve => setTimeout(resolve, 1500));
+
+        // Mock product data - in real implementation, this would call OpenFoodFacts API
+        const mockProducts = {
+            '8901234567890': {
+                name: 'Organic Whole Wheat Bread',
+                brand: 'Nature\'s Best',
+                ingredients: 'Whole wheat flour, water, honey, yeast, sea salt, sunflower oil',
+                barcode: '8901234567890',
+                image: 'https://via.placeholder.com/200x200?text=Bread'
+            },
+            '8901234567891': {
+                name: 'Fruit Yogurt Drink',
+                brand: 'FreshDaily',
+                ingredients: 'Milk, sugar, strawberry puree, natural flavor, citric acid, potassium sorbate',
+                barcode: '8901234567891',
+                image: 'https://via.placeholder.com/200x200?text=Yogurt'
+            },
+            '8901234567892': {
+                name: 'Instant Noodles',
+                brand: 'QuickMeal',
+                ingredients: 'Wheat flour, palm oil, salt, monosodium glutamate, artificial flavor, TBHQ',
+                barcode: '8901234567892',
+                image: 'https://via.placeholder.com/200x200?text=Noodles'
+            }
+        };
+
+        return mockProducts[barcode] || {
+            name: 'Product Not Found',
+            brand: 'Unknown',
+            ingredients: 'No ingredient data available',
+            barcode: barcode,
+            image: null
+        };
+    }
+
+    async processImageForBarcode(file) {
+        // Simulate image processing delay
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        
+        // Mock barcode detection - in real implementation, use a barcode detection library
+        const mockBarcodes = ['8901234567890', '8901234567891', '8901234567892'];
+        return mockBarcodes[Math.floor(Math.random() * mockBarcodes.length)];
+    }
+
+    async analyzeProductSafety(productData) {
+        // Simulate AI analysis delay
+        await new Promise(resolve => setTimeout(resolve, 2000));
+
+        const analysis = this.performSafetyAnalysis(productData);
+        this.displayResults(productData, analysis);
+        this.showResultsSection();
+    }
+
+    performSafetyAnalysis(productData) {
+        const ingredients = productData.ingredients.toLowerCase();
+        
+        // AI Safety Analysis Logic
+        const analysis = {
+            overallScore: this.calculateOverallSafety(ingredients),
+            ingredientSafety: this.analyzeIngredients(ingredients),
+            additiveAnalysis: this.analyzeAdditives(ingredients),
+            nutritionalQuality: this.analyzeNutritionalQuality(ingredients),
+            allergenRisk: this.analyzeAllergenRisk(ingredients),
+            recommendations: this.generateRecommendations(ingredients)
+        };
+
+        return analysis;
+    }
+
+    calculateOverallSafety(ingredients) {
+        let score = 70; // Base score
+
+        // Positive factors
+        if (ingredients.includes('organic')) score += 10;
+        if (ingredients.includes('whole') && ingredients.includes('wheat')) score += 8;
+        if (ingredients.includes('natural')) score += 5;
+        if (!ingredients.includes('artificial')) score += 5;
+
+        // Negative factors
+        if (ingredients.includes('monosodium glutamate') || ingredients.includes('msg')) score -= 15;
+        if (ingredients.includes('high fructose corn syrup')) score -= 12;
+        if (ingredients.includes('artificial flavor') || ingredients.includes('artificial color')) score -= 10;
+        if (ingredients.includes('sodium nitrate')) score -= 8;
+        if (ingredients.includes('tbhq') || ingredients.includes('bht')) score -= 8;
+        if (ingredients.includes('hydrogenated')) score -= 10;
+
+        // Ensure score is between 0-100
+        return Math.max(0, Math.min(100, Math.round(score)));
+    }
+
+    analyzeIngredients(ingredients) {
+        const harmfulIngredients = [
+            'monosodium glutamate', 'high fructose corn syrup', 'sodium nitrate',
+            'tbhq', 'bht', 'bha', 'potassium bromate', 'azodicarbonamide'
+        ];
+
+        const foundHarmful = harmfulIngredients.filter(ing => ingredients.includes(ing));
+        const score = Math.max(0, 100 - (foundHarmful.length * 20));
+
+        return {
+            score: score,
+            analysis: foundHarmful.length > 0 
+                ? `Contains ${foundHarmful.length} potentially harmful ingredient${foundHarmful.length > 1 ? 's' : ''}: ${foundHarmful.join(', ')}`
+                : 'No harmful ingredients detected. Contains mostly natural components.',
+            details: foundHarmful
+        };
+    }
+
+    analyzeAdditives(ingredients) {
+        const additives = {
+            'preservatives': ['potassium sorbate', 'sodium benzoate', 'calcium propionate'],
+            'artificial colors': ['red 40', 'yellow 5', 'blue 1', 'artificial color'],
+            'artificial flavors': ['artificial flavor', 'natural flavor'],
+            'sweeteners': ['aspartame', 'sucralose', 'saccharin'],
+            'emulsifiers': ['soy lecithin', 'mono and diglycerides']
+        };
+
+        let additiveCount = 0;
+        let foundAdditives = [];
+
+        Object.entries(additives).forEach(([category, items]) => {
+            items.forEach(additive => {
+                if (ingredients.includes(additive)) {
+                    additiveCount++;
+                    foundAdditives.push(`${additive} (${category})`);
+                }
+            });
+        });
+
+        const score = Math.max(0, 100 - (additiveCount * 8));
+        
+        return {
+            score: score,
+            analysis: additiveCount > 0 
+                ? `Contains ${additiveCount} food additive${additiveCount > 1 ? 's' : ''}`
+                : 'Minimal or no artificial additives',
+            details: foundAdditives
+        };
+    }
+
+    analyzeNutritionalQuality(ingredients) {
+        let score = 60;
+        const positiveIndicators = ['whole grain', 'fiber', 'protein', 'vitamin', 'mineral', 'antioxidant'];
+        const negativeIndicators = ['sugar', 'syrup', 'hydrogenated', 'shortening', 'refined'];
+
+        positiveIndicators.forEach(indicator => {
+            if (ingredients.includes(indicator)) score += 5;
+        });
+
+        negativeIndicators.forEach(indicator => {
+            if (ingredients.includes(indicator)) score -= 8;
+        });
+
+        score = Math.max(0, Math.min(100, score));
+
+        return {
+            score: score,
+            analysis: score >= 70 ? 'Good nutritional profile' : 
+                     score >= 50 ? 'Average nutritional value' : 'Poor nutritional quality',
+            details: []
+        };
+    }
+
+    analyzeAllergenRisk(ingredients) {
+        const commonAllergens = [
+            'milk', 'eggs', 'fish', 'shellfish', 'tree nuts', 'peanuts',
+            'wheat', 'soy', 'gluten'
+        ];
+
+        const foundAllergens = commonAllergens.filter(allergen => ingredients.includes(allergen));
+        const score = foundAllergens.length === 0 ? 100 : Math.max(20, 100 - (foundAllergens.length * 15));
+
+        return {
+            score: score,
+            analysis: foundAllergens.length > 0 
+                ? `Contains ${foundAllergens.length} common allergen${foundAllergens.length > 1 ? 's' : ''}`
+                : 'No common allergens detected',
+            details: foundAllergens
+        };
+    }
+
+    generateRecommendations(ingredients) {
+        const recommendations = [];
+
+        if (ingredients.includes('monosodium glutamate')) {
+            recommendations.push({
+                type: 'warning',
+                text: 'Contains MSG - may cause sensitivity in some individuals'
+            });
+        }
+
+        if (ingredients.includes('high fructose corn syrup')) {
+            recommendations.push({
+                type: 'warning',
+                text: 'Contains high fructose corn syrup - consider limiting consumption'
+            });
+        }
+
+        if (ingredients.includes('hydrogenated')) {
+            recommendations.push({
+                type: 'danger',
+                text: 'Contains trans fats - avoid for heart health'
+            });
+        }
+
+        if (ingredients.includes('artificial flavor') || ingredients.includes('artificial color')) {
+            recommendations.push({
+                type: 'warning',
+                text: 'Contains artificial additives - consider natural alternatives'
+            });
+        }
+
+        if (ingredients.includes('whole grain') && ingredients.includes('fiber')) {
+            recommendations.push({
+                type: 'safe',
+                text: 'Good source of whole grains and fiber - beneficial for digestive health'
+            });
+        }
+
+        if (recommendations.length === 0) {
+            recommendations.push({
+                type: 'safe',
+                text: 'Product appears to have reasonable ingredient quality'
+            });
+        }
+
+        return recommendations;
+    }
+
+    displayResults(productData, analysis) {
+        // Update product info
+        document.getElementById('productNameDisplay').textContent = productData.name;
+        document.getElementById('productBrandDisplay').textContent = productData.brand;
+        document.getElementById('barcodeDisplay').textContent = productData.barcode;
+
+        // Update safety rating
+        this.updateSafetyRating(analysis.overallScore);
+
+        // Update detailed analysis
+        this.updateDetailedAnalysis(analysis);
+
+        // Update recommendations
+        this.updateRecommendations(analysis.recommendations);
+    }
+
+    updateSafetyRating(score) {
+        const safetyBadge = document.getElementById('safetyBadge');
+        const safetyScore = document.getElementById('safetyScore');
+        const safetyText = document.getElementById('safetyText');
+        const meterFill = document.getElementById('meterFill');
+
+        safetyScore.textContent = score;
+        meterFill.style.width = `${score}%`;
+
+        // Remove existing classes
+        safetyBadge.className = 'rating-badge';
+        
+        if (score >= 80) {
+            safetyText.textContent = 'VERY SAFE';
+            safetyBadge.classList.add('rating-safe');
+        } else if (score >= 60) {
+            safetyText.textContent = 'MODERATELY SAFE';
+            safetyBadge.classList.add('rating-moderate');
+        } else {
+            safetyText.textContent = 'CAUTION ADVISED';
+            safetyBadge.classList.add('rating-unsafe');
+        }
+    }
+
+    updateDetailedAnalysis(analysis) {
+        document.getElementById('ingredientScore').textContent = analysis.ingredientSafety.score;
+        document.getElementById('ingredientAnalysis').textContent = analysis.ingredientSafety.analysis;
+
+        document.getElementById('additiveScore').textContent = analysis.additiveAnalysis.score;
+        document.getElementById('additiveAnalysis').textContent = analysis.additiveAnalysis.analysis;
+
+        document.getElementById('nutritionScore').textContent = analysis.nutritionalQuality.score;
+        document.getElementById('nutritionAnalysis').textContent = analysis.nutritionalQuality.analysis;
+
+        document.getElementById('allergenScore').textContent = analysis.allergenRisk.score;
+        document.getElementById('allergenAnalysis').textContent = analysis.allergenRisk.analysis;
+    }
+
+    updateRecommendations(recommendations) {
+        const container = document.getElementById('recommendationList');
+        container.innerHTML = '';
+
+        recommendations.forEach(rec => {
+            const item = document.createElement('div');
+            item.className = `recommendation-item ${rec.type}`;
+            
+            let icon = '💡';
+            if (rec.type === 'warning') icon = '⚠️';
+            if (rec.type === 'danger') icon = '🚫';
+            if (rec.type === 'safe') icon = '✅';
+
+            item.innerHTML = `
+                <span class="recommendation-icon">${icon}</span>
+                <span class="recommendation-text">${rec.text}</span>
+            `;
+            
+            container.appendChild(item);
+        });
+    }
+
+    showResultsSection() {
+        document.getElementById('resultsSection').style.display = 'block';
+        // Smooth scroll to results
+        document.getElementById('resultsSection').scrollIntoView({ 
+            behavior: 'smooth',
+            block: 'start'
+        });
+    }
+
+    showLoading() {
+        document.getElementById('loadingOverlay').style.display = 'flex';
+    }
+
+    hideLoading() {
+        document.getElementById('loadingOverlay').style.display = 'none';
+    }
+
+    showError(message) {
+        alert(message); // In production, use a better error display method
+    }
 }
 
-/* display product info returned by OpenFoodFacts */
-function displayProductFromOFF(p, code){
-  const name = p.product_name || p.generic_name || p.brands || "Unnamed product";
-  const brand = p.brands || "";
-  const img = p.image_small_url || p.image_url || "";
-  productTitle.textContent = name;
-  productBrand.textContent = brand;
-  if(img){
-    productImage.innerHTML = `<img src="${img}" alt="${escapeHtml(name)}">`;
-  } else {
-    productImage.innerHTML = `<span class="muted">${T[currentLang].noImage}</span>`;
-  }
-  // short description
-  const short = (p.ingredients_text || p.generic_name || p.quantity || "").slice(0,200);
-  productDesc.textContent = short || (p.categories || "").slice(0,200);
-  // nutrition
-  if(p.nutriments){
-    nutritionBox.style.display = 'block';
-    nutritionList.innerHTML = `
-      <div>Energy: ${(p.nutriments['energy-kcal_100g'] ?? p.nutriments['energy-kj_100g'] ?? '-')}</div>
-      <div>Fat: ${p.nutriments['fat_100g'] ?? '-' } g</div>
-      <div>Saturated fat: ${p.nutriments['saturated-fat_100g'] ?? '-'} g</div>
-      <div>Sugars: ${p.nutriments['sugars_100g'] ?? '-'} g</div>
-      <div>Salt: ${p.nutriments['salt_100g'] ?? '-'} g</div>
-    `;
-  } else {
-    nutritionBox.style.display = 'none';
-  }
+// Initialize the application when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    new FoodSafetyAnalyzer();
+});
 
-  openFoodFactsUrl = `https://world.openfoodfacts.org/product/${encodeURIComponent(p.code || code)}`;
-  $('openProductBtn').onclick = () => { window.open(openFoodFactsUrl, '_blank'); };
-
-  // show ingredients preview
-  const ingredientsText = p.ingredients_text || p.ingredients_text_en || "";
-  // show in AI panel if enabled
-  if(aiToggle.checked){
-    $('aiPanel').style.display = 'block';
-    // show ingredients in output area as initial content
-    aiOutput.textContent = ingredientsText ? "Ingredients: " + ingredientsText : "No ingredients text available.";
-  } else {
-    $('aiPanel').style.display = 'none';
-  }
+// Additional utility functions
+function validateBarcode(barcode) {
+    return /^\d{8,13}$/.test(barcode);
 }
 
-/* Clear UI */
-clearBtn.addEventListener('click', () => {
-  lastBarcode = '';
-  $('lastCode').textContent = '—';
-  productTitle.textContent = T[currentLang].noProduct;
-  productBrand.textContent = T[currentLang].noProduct;
-  productImage.innerHTML = '<span class="muted">'+T[currentLang].noImage+'</span>';
-  productDesc.textContent = '';
-  nutritionBox.style.display = 'none';
-  aiOutput.textContent = '';
-});
+function formatIngredients(ingredientsText) {
+    return ingredientsText.split(',').map(ing => ing.trim()).filter(ing => ing.length > 0);
+}
 
-/* AI toggle UI */
-aiToggle.addEventListener('change', () => {
-  aiPanel.style.display = aiToggle.checked ? 'block' : 'none';
-});
-
-/* AI run (client-side stub calls server) */
-aiRun.addEventListener('click', async () => {
-  const ingredients = aiOutput.textContent || '';
-  if(!aiToggle.checked){
-    alert("Enable AI toggle first to call server.");
-    return;
-  }
-  if(!ingredients || ingredients.length < 3){
-    alert("No ingredients text to analyze.");
-    return;
-  }
-
-  // By default we DO NOT call any remote AI. Replace `AI_ENABLED` to true and set `aiEndpoint`
-  const AI_ENABLED = false; // change to true AFTER you deploy server
-  const aiEndpoint = "/api/parse-ingredients"; // update to your server URL
-
-  if(!AI_ENABLED){
-    // local demo output (no network)
-    aiOutput.textContent = "Demo AI output (server not enabled):\n" +
-      JSON.stringify({
-        parsedIngredients: (ingredients || "").split(',').slice(0,10).map(s => s.trim()),
-        possibleAllergens: /milk|soy|egg|peanut|almond|wheat|gluten/i.test(ingredients) ? ["milk"] : [],
-        suggestions: ["Use smaller portions", "Consider lower-sugar alternative"]
-      }, null, 2);
-    return;
-  }
-
-  // if enabled: call server securely
-  aiRun.textContent = "Running...";
-  try {
-    const resp = await fetch(aiEndpoint, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ingredientsText: ingredients })
-    });
-    const json = await resp.json();
-    aiOutput.textContent = JSON.stringify(json, null, 2);
-  } catch(e){
-    aiOutput.textContent = "AI error: " + (e.message || e);
-  } finally {
-    aiRun.textContent = T[currentLang].aiRun;
-  }
-});
-
-/* tiny helper */
-function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-
-/* initial state */
-applyLang(currentLang);
-productImage.innerHTML = `<span class="muted">${T[currentLang].noImage}</span>`;
-
-/* accessibility: allow enter on manual input to lookup */
-manualInput.addEventListener('keydown', (e)=> {
-  if(e.key === 'Enter') lookupBtn.click();
-});
-
+// Export for module usage if needed
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = FoodSafetyAnalyzer;
+}
