@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Diet | Find Your Perfect Nutritionist</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="nutri.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-leaf"></i>
+                </div>
+                <div class="logo-text">SmartDiet</div>
+            </a>
+            
+            <div class="nav-links">
+                <a href="#"><i class="fas fa-home"></i> Home</a>
+                <a href="#" class="active"><i class="fas fa-user-md"></i> Nutritionists</a>
+                <a href="#"><i class="fas fa-utensils"></i> Meal Plans</a>
+                <a href="#"><i class="fas fa-calendar-alt"></i> Appointments</a>
+                <a href="#"><i class="fas fa-chart-line"></i> Progress</a>
+            </div>
+            
+            <div class="header-actions">
+                <div class="user-profile">
+                    <div class="user-avatar">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Profile">
+                    </div>
+                    <span>Sarah</span>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <div class="main-container">
+        <!-- Filters Sidebar -->
+        <div class="filters-sidebar">
+            <div class="search-box">
+                <h3><i class="fas fa-search"></i> Find Nutritionists</h3>
+                <div class="search-input">
+                    <input type="text" placeholder="Search by name, specialty...">
+                    <button class="search-btn"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+            
+            <div class="filter-section">
+                <h3><i class="fas fa-filter"></i> Filter by Specialty</h3>
+                <div class="filter-options">
+                    <div class="filter-option">
+                        <input type="checkbox" id="weight-loss" checked>
+                        <label for="weight-loss">Weight Loss</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="sports-nutrition" checked>
+                        <label for="sports-nutrition">Sports Nutrition</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="diabetes" checked>
+                        <label for="diabetes">Diabetes Management</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="plant-based" checked>
+                        <label for="plant-based">Plant-Based Diet</label>
+                    </div>
+                    <div class="filter-option">
+                        <input type="checkbox" id="pediatric" checked>
+                        <label for="pediatric">Pediatric Nutrition</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="filter-section">
+                <h3><i class="fas fa-star"></i> Filter by Rating</h3>
+                <div class="rating-filter">
+                    <div class="rating-option">
+                        <div class="rating-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <span class="rating-count">(124)</span>
+                    </div>
+                    <div class="rating-option">
+                        <div class="rating-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                        <span class="rating-count">(87)</span>
+                    </div>
+                    <div class="rating-option">
+                        <div class="rating-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                        <span class="rating-count">(42)</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="filter-section">
+                <h3><i class="fas fa-dollar-sign"></i> Price Range</h3>
+                <div class="price-range">
+                    <div class="price-inputs">
+                        <input type="number" class="price-input" placeholder="Min" value="50">
+                        <input type="number" class="price-input" placeholder="Max" value="200">
+                    </div>
+                    <button class="search-btn" style="width: 100%;">Apply Price Filter</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Nutritionist Listings -->
+        <div class="nutritionist-listings">
+            <div class="listings-header">
+                <h2>Available Nutritionists</h2>
+                <div class="sort-options">
+                    <span>Sort by:</span>
+                    <select>
+                        <option>Highest Rated</option>
+                        <option>Most Reviews</option>
+                        <option>Price: Low to High</option>
+                        <option>Price: High to Low</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Nutritionist Card 1 -->
+            <div class="nutritionist-card">
+                <div class="card-header">
+                    <div class="nutritionist-avatar">
+                        <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Dr. Emily Chen">
+                    </div>
+                    <div class="nutritionist-info">
+                        <h3 class="nutritionist-name">Dr. Emily Chen</h3>
+                        <div class="nutritionist-specialty">Weight Loss & Diabetes Specialist</div>
+                        <div class="nutritionist-rating">
+                            <div class="rating-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="rating-value">4.9</span>
+                            <span class="review-count">(124 reviews)</span>
+                        </div>
+                        <div class="nutritionist-tags">
+                            <span class="tag">Weight Loss</span>
+                            <span class="tag">Diabetes</span>
+                            <span class="tag">Meal Planning</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="nutritionist-bio">
+                        Registered Dietitian with 10+ years of experience specializing in weight management and diabetes care. My approach focuses on sustainable lifestyle changes rather than restrictive diets.
+                    </p>
+                    <div class="nutritionist-stats">
+                        <div class="stat">
+                            <div class="stat-value">1,240+</div>
+                            <div class="stat-label">Patients Helped</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">10</div>
+                            <div class="stat-label">Years Exp.</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">98%</div>
+                            <div class="stat-label">Success Rate</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="nutritionist-price">$150 <span class="price-unit">/ session</span></div>
+                    <div class="card-actions">
+                        <button class="view-profile-btn" data-nutritionist="emily-chen">View Profile</button>
+                        <button class="book-now-btn" data-nutritionist="emily-chen">Book Now</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Nutritionist Card 2 -->
+            <div class="nutritionist-card">
+                <div class="card-header">
+                    <div class="nutritionist-avatar">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Dr. Michael Rodriguez">
+                    </div>
+                    <div class="nutritionist-info">
+                        <h3 class="nutritionist-name">Dr. Michael Rodriguez</h3>
+                        <div class="nutritionist-specialty">Sports Nutrition & Performance</div>
+                        <div class="nutritionist-rating">
+                            <div class="rating-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="rating-value">4.7</span>
+                            <span class="review-count">(87 reviews)</span>
+                        </div>
+                        <div class="nutritionist-tags">
+                            <span class="tag">Sports Nutrition</span>
+                            <span class="tag">Athletes</span>
+                            <span class="tag">Performance</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="nutritionist-bio">
+                        Certified Sports Nutritionist with a background in exercise physiology. I work with athletes of all levels to optimize performance through personalized nutrition strategies.
+                    </p>
+                    <div class="nutritionist-stats">
+                        <div class="stat">
+                            <div class="stat-value">850+</div>
+                            <div class="stat-label">Athletes Coached</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">8</div>
+                            <div class="stat-label">Years Exp.</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">95%</div>
+                            <div class="stat-label">Satisfaction</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="nutritionist-price">$180 <span class="price-unit">/ session</span></div>
+                    <div class="card-actions">
+                        <button class="view-profile-btn" data-nutritionist="michael-rodriguez">View Profile</button>
+                        <button class="book-now-btn" data-nutritionist="michael-rodriguez">Book Now</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Nutritionist Card 3 -->
+            <div class="nutritionist-card">
+                <div class="card-header">
+                    <div class="nutritionist-avatar">
+                        <img src="https://randomuser.me/api/portraits/women/33.jpg" alt="Dr. Sarah Johnson">
+                    </div>
+                    <div class="nutritionist-info">
+                        <h3 class="nutritionist-name">Dr. Sarah Johnson</h3>
+                        <div class="nutritionist-specialty">Plant-Based & Holistic Nutrition</div>
+                        <div class="nutritionist-rating">
+                            <div class="rating-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <span class="rating-value">4.2</span>
+                            <span class="review-count">(42 reviews)</span>
+                        </div>
+                        <div class="nutritionist-tags">
+                            <span class="tag">Plant-Based</span>
+                            <span class="tag">Holistic</span>
+                            <span class="tag">Wellness</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="nutritionist-bio">
+                        Holistic Nutritionist specializing in plant-based diets and integrative approaches to health. I believe in food as medicine and focus on whole-food, nutrient-dense eating patterns.
+                    </p>
+                    <div class="nutritionist-stats">
+                        <div class="stat">
+                            <div class="stat-value">520+</div>
+                            <div class="stat-label">Clients</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">6</div>
+                            <div class="stat-label">Years Exp.</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">92%</div>
+                            <div class="stat-label">Success Rate</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="nutritionist-price">$120 <span class="price-unit">/ session</span></div>
+                    <div class="card-actions">
+                        <button class="view-profile-btn" data-nutritionist="sarah-johnson">View Profile</button>
+                        <button class="book-now-btn" data-nutritionist="sarah-johnson">Book Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Nutritionist Profile Modal -->
+    <div class="profile-modal" id="profile-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-nutritionist-name">Nutritionist Profile</h2>
+                <div class="close-modal" id="close-profile-modal">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="profile-header">
+                    <div class="profile-avatar">
+                        <img id="modal-avatar" src="" alt="Nutritionist">
+                    </div>
+                    <div class="profile-details">
+                        <h3 class="profile-name" id="modal-name">Dr. Emily Chen</h3>
+                        <div class="profile-specialty" id="modal-specialty">Weight Loss & Diabetes Specialist</div>
+                        <div class="profile-rating">
+                            <div class="rating-stars" id="modal-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="rating-value" id="modal-rating-value">4.9</span>
+                            <span class="review-count" id="modal-review-count">(124 reviews)</span>
+                        </div>
+                        <div class="profile-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span id="modal-location">New York, NY</span>
+                        </div>
+                        <div class="profile-stats">
+                            <div class="profile-stat">
+                                <div class="profile-stat-value" id="modal-patients">1,240+</div>
+                                <div class="profile-stat-label">Patients</div>
+                            </div>
+                            <div class="profile-stat">
+                                <div class="profile-stat-value" id="modal-experience">10</div>
+                                <div class="profile-stat-label">Years Exp.</div>
+                            </div>
+                            <div class="profile-stat">
+                                <div class="profile-stat-value" id="modal-success">98%</div>
+                                <div class="profile-stat-label">Success Rate</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="profile-section">
+                    <h3><i class="fas fa-user-md"></i> About Me</h3>
+                    <p id="modal-about">
+                        Registered Dietitian with 10+ years of experience specializing in weight management and diabetes care. My approach focuses on sustainable lifestyle changes rather than restrictive diets.
+                    </p>
+                </div>
+                
+                <div class="profile-section">
+                    <h3><i class="fas fa-graduation-cap"></i> Education & Credentials</h3>
+                    <p id="modal-education">
+                        • Ph.D. in Nutritional Sciences, Cornell University<br>
+                        • Registered Dietitian Nutritionist (RDN)<br>
+                        • Certified Diabetes Educator (CDE)<br>
+                        • Board Certified Specialist in Obesity and Weight Management
+                    </p>
+                </div>
+                
+                <div class="profile-section">
+                    <h3><i class="fas fa-star"></i> Reviews</h3>
+                    <div class="reviews-list" id="modal-reviews">
+                        <!-- Reviews will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="close-profile-btn">Close</button>
+                <button class="btn-primary" id="book-from-profile">Book Appointment</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Booking Modal -->
+    <div class="booking-modal" id="booking-modal">
+        <div class="booking-content">
+            <div class="booking-header">
+                <h2 id="booking-nutritionist-name">Book Appointment</h2>
+            </div>
+            <div class="booking-body">
+                <div class="booking-summary">
+                    <div class="summary-item">
+                        <span>Nutritionist:</span>
+                        <span id="summary-name">Dr. Emily Chen</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Specialty:</span>
+                        <span id="summary-specialty">Weight Loss & Diabetes Specialist</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Session Rate:</span>
+                        <span id="summary-rate">$150 / session</span>
+                    </div>
+                    <div class="summary-item summary-total">
+                        <span>Total:</span>
+                        <span id="summary-total">$150</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="appointment-date">Preferred Date</label>
+                    <input type="date" id="appointment-date" class="form-control">
+                </div>
+                
+                <div class="form-group">
+                    <label for="appointment-time">Preferred Time</label>
+                    <select id="appointment-time" class="form-control">
+                        <option value="">Select a time</option>
+                        <option value="09:00">9:00 AM</option>
+                        <option value="10:00">10:00 AM</option>
+                        <option value="11:00">11:00 AM</option>
+                        <option value="13:00">1:00 PM</option>
+                        <option value="14:00">2:00 PM</option>
+                        <option value="15:00">3:00 PM</option>
+                        <option value="16:00">4:00 PM</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="health-goals">Health Goals & Concerns</label>
+                    <textarea id="health-goals" class="form-control" rows="4" placeholder="Please describe your health goals, dietary concerns, or any specific issues you'd like to address..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="close-booking-btn">Cancel</button>
+                <button class="btn-primary" id="confirm-booking">Confirm Booking</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="nutri.js"></script>
+</body>
+</html>
